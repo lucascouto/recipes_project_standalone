@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Recipe } from './recipe';
 
 @Injectable()
@@ -17,6 +17,8 @@ export class RecipeService {
         'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
     },
   ];
+
+  recipeSelected = new EventEmitter<Recipe>();
 
   getRecipes() {
     return this.recipes.slice();

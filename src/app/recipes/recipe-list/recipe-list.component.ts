@@ -8,16 +8,11 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  @Output() recipeInfo = new EventEmitter<Recipe>();
   recipes: Recipe[] = [];
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.recipes = this.recipeService.getRecipes();
-  }
-
-  onGetRecipeInfo(recipe: Recipe): void {
-    this.recipeInfo.emit(recipe);
   }
 }
