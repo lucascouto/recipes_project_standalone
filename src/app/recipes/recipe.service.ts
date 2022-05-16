@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe';
@@ -7,6 +7,7 @@ import { Recipe } from './recipe';
 export class RecipeService {
   private recipes: Recipe[] = [
     {
+      id: 1,
       name: 'A test recipe',
       description: 'this is a simply test',
       imagePath:
@@ -17,6 +18,7 @@ export class RecipeService {
       ],
     },
     {
+      id: 2,
       name: 'Another recipe',
       description: 'another teste recipe',
       imagePath:
@@ -30,7 +32,9 @@ export class RecipeService {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  recipeSelected = new EventEmitter<Recipe>();
+  getRecipe(id: number): Recipe {
+    return this.recipes.find((recipe) => recipe.id === id);
+  }
 
   getRecipes() {
     return this.recipes.slice();
