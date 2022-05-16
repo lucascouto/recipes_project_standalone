@@ -24,7 +24,9 @@
               To Shopping list
             </a>
           </li>
-          <li><a href="#">Edit Recipe</a></li>
+          <li>
+            <a [routerLink]="['/recipes/edit', recipe.id]">Edit Recipe</a>
+          </li>
           <li><a href="#">Delete Recipe</a></li>
         </ul>
       </div>
