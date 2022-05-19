@@ -20,9 +20,7 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <a href="#" (click)="addIngredientsToShoppingList()">
-              To Shopping list
-            </a>
+            <a (click)="addIngredientsToShoppingList()"> To Shopping list </a>
           </li>
           <li>
             <a [routerLink]="['/recipes/edit', recipe.id]">Edit Recipe</a>
