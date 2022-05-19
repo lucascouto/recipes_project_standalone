@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Ingredient } from '../../shared/ingredient';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Ingredient } from 'src/app/shared/ingredient';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -8,17 +9,11 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-edit.component.css'],
 })
 export class ShoppingEditComponent implements OnInit {
-  name = '';
-  amount = '';
-
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {}
 
-  onIngredientAdd(): void {
-    this.shoppingListService.addIngredient({
-      name: this.name,
-      amount: +this.amount,
-    });
+  onIngredientAdd(form: NgForm): void {
+    this.shoppingListService.addIngredient(form.value as Ingredient);
   }
 }
