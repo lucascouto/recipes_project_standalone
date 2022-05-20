@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,7 +8,24 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./recipe-edit.component.css'],
 })
 export class RecipeEditComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
+  recipeForm: FormGroup;
 
-  ngOnInit(): void {}
+  constructor(private route: ActivatedRoute, private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  private createForm(): void {
+    this.recipeForm = this.fb.group({
+      name: [null, Validators.required],
+      description: [null],
+      imagePath: [null],
+      ingredients: this.fb.array([]),
+    });
+  }
+
+  onSubmit(): void {
+    console.log(this.recipeForm.value);
+  }
 }
