@@ -7,7 +7,6 @@ import { Recipe } from './recipe';
 export class RecipeService {
   private recipes: Recipe[] = [
     {
-      id: 1,
       name: 'A test recipe',
       description: 'this is a simply test',
       imagePath:
@@ -18,7 +17,6 @@ export class RecipeService {
       ],
     },
     {
-      id: 2,
       name: 'Another recipe',
       description: 'another teste recipe',
       imagePath:
@@ -32,8 +30,8 @@ export class RecipeService {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  getRecipe(id: number): Recipe {
-    return this.recipes.find((recipe) => recipe.id === id);
+  getRecipe(index: number): Recipe {
+    return this.recipes[index];
   }
 
   getRecipes() {
