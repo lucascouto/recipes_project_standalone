@@ -36,8 +36,7 @@ export class ShoppingListService {
   }
 
   editIngredient(ingredient: Ingredient, index: number): void {
-    this.ingredients[index]['name'] = ingredient.name;
-    this.ingredients[index]['amount'] = ingredient.amount;
+    this.ingredients[index] = ingredient;
   }
 
   deleteIngredient(index: number): void {
