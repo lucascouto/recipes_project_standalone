@@ -4,8 +4,6 @@ import { Ingredient } from '../shared/ingredient';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListService {
-  ingredientsChanged = new Subject<Ingredient[]>();
-
   private ingredients: Ingredient[] = [
     {
       name: 'Apples',
@@ -21,12 +19,10 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient): void {
     this.ingredients.push(ingredient);
-    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredients(ingredients: Ingredient[]): void {
     this.ingredients.push(...ingredients);
-    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   getIngredients(): Ingredient[] {
