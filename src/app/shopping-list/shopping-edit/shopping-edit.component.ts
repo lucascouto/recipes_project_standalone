@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient';
 import { ShoppingListService } from '../shopping-list.service';
@@ -8,17 +16,22 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css'],
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnChanges {
+  @Input() ingredient: Ingredient;
+  @ViewChild('ingredientForm') ngForm: NgForm;
+
   constructor(private shoppingListService: ShoppingListService) {}
 
-  ngOnInit(): void {}
+  ngOnChanges(): void {
+    this.ngForm?.form.patchValue(this.ingredient);
+  }
 
-  onIngredientAdd(ngForm: NgForm): void {
-    if (ngForm.invalid) {
-      ngForm.form.markAllAsTouched();
+  onIngredientAdd(): void {
+    if (this.ngForm.invalid) {
+      this.ngForm.form.markAllAsTouched();
       return;
     }
 
-    this.shoppingListService.addIngredient(ngForm.value as Ingredient);
+    this.shoppingListService.addIngredient(this.ngForm.value as Ingredient);
   }
 }
