@@ -47,4 +47,8 @@ export class ShoppingEditComponent implements OnInit {
     this.editMode = false;
     this.ngForm.reset();
   }
+
+  resetForm() {
+    this.ngForm.reset();
+  }
 }
