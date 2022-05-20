@@ -23,7 +23,7 @@ export class RecipeEditComponent implements OnInit {
     this.createForm();
     this.route.params.subscribe((param) => {
       const recipe = this.recipeService.getRecipe(param['id']);
-      this.recipeImg = recipe.imagePath;
+      this.recipeImg = recipe?.imagePath;
       this.recipeForm.patchValue(recipe);
     });
   }
