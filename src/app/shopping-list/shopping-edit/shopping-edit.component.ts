@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient';
 import { ShoppingListService } from '../shopping-list.service';
@@ -16,22 +8,32 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css'],
 })
-export class ShoppingEditComponent implements OnChanges {
-  @Input() ingredient: Ingredient;
+export class ShoppingEditComponent implements OnInit {
+  ingredientIndex: number;
   @ViewChild('ingredientForm') ngForm: NgForm;
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  ngOnChanges(): void {
-    this.ngForm?.form.patchValue(this.ingredient);
+  ngOnInit(): void {
+    this.shoppingListService.ingredientToEdit.subscribe((index) => {
+      this.ingredientIndex = index;
+      const ingredient = this.shoppingListService.getIngredient(index);
+      this.ngForm.form.patchValue(ingredient);
+    });
   }
 
-  onIngredientAdd(): void {
+  addOrEditIngredient(): void {
     if (this.ngForm.invalid) {
       this.ngForm.form.markAllAsTouched();
       return;
     }
 
-    this.shoppingListService.addIngredient(this.ngForm.value as Ingredient);
+    const ingredient = this.ngForm.value as Ingredient;
+
+    if (this.ingredientIndex > -1) {
+      this.shoppingListService.editIngredient(ingredient, this.ingredientIndex);
+      return;
+    }
+    this.shoppingListService.addIngredient(ingredient);
   }
 }
