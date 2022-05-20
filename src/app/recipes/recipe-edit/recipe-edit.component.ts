@@ -1,7 +1,12 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -24,6 +29,16 @@ export class RecipeEditComponent implements OnInit {
     this.route.params.subscribe((param) => {
       const recipe = this.recipeService.getRecipe(param['id']);
       this.recipeImg = recipe?.imagePath;
+      if (recipe?.ingredients) {
+        for (const ingredient of recipe.ingredients) {
+          (this.recipeForm.get('ingredients') as FormArray).push(
+            this.fb.group({
+              name: [ingredient.name],
+              amount: [ingredient.amount],
+            })
+          );
+        }
+      }
       this.recipeForm.patchValue(recipe);
     });
   }
@@ -44,5 +59,9 @@ export class RecipeEditComponent implements OnInit {
   changeImage(event: Event): void {
     const imgUrl = (event.target as HTMLInputElement).value;
     this.recipeImg = imgUrl;
+  }
+
+  getIngredientsControls(): AbstractControl[] {
+    return (this.recipeForm.get('ingredients') as FormArray).controls;
   }
 }
