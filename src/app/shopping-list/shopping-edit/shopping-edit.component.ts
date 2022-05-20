@@ -9,13 +9,15 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-edit.component.css'],
 })
 export class ShoppingEditComponent implements OnInit {
-  ingredientIndex: number;
+  ingredientIndex = 0;
   @ViewChild('ingredientForm') ngForm: NgForm;
+  editMode = false;
 
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
     this.shoppingListService.ingredientToEdit.subscribe((index) => {
+      this.editMode = true;
       this.ingredientIndex = index;
       const ingredient = this.shoppingListService.getIngredient(index);
       this.ngForm.form.patchValue(ingredient);
@@ -30,10 +32,13 @@ export class ShoppingEditComponent implements OnInit {
 
     const ingredient = this.ngForm.value as Ingredient;
 
-    if (this.ingredientIndex > -1) {
+    if (this.editMode) {
       this.shoppingListService.editIngredient(ingredient, this.ingredientIndex);
+      this.editMode = false;
+      this.ngForm.reset();
       return;
     }
     this.shoppingListService.addIngredient(ingredient);
+    this.ngForm.reset();
   }
 }
