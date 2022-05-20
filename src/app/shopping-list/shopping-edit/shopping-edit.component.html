@@ -44,14 +44,17 @@
           <button class="btn btn-success" type="submit">
             {{ editMode ? "Edit" : "Add" }}
           </button>
-          <button
-            class="btn btn-success"
-            *ngIf="editMode"
-            (click)="cancelEdit()"
-          >
+          <button class="btn btn-success" *ngIf="editMode">
             Cancel editing
           </button>
-          <button class="btn btn-danger" type="button">Delete</button>
+          <button
+            class="btn btn-danger"
+            type="button"
+            *ngIf="editMode"
+            (click)="deleteIngredient()"
+          >
+            Delete
+          </button>
           <button class="btn btn-primary" type="button">Clear</button>
         </div>
       </div>

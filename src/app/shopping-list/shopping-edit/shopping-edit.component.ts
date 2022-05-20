@@ -42,7 +42,8 @@ export class ShoppingEditComponent implements OnInit {
     this.ngForm.reset();
   }
 
-  cancelEdit() {
+  deleteIngredient() {
+    this.shoppingListService.deleteIngredient(this.ingredientIndex);
     this.editMode = false;
     this.ngForm.reset();
   }
