@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Recipe } from '../recipe';
@@ -11,7 +11,7 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
-  recipe: Recipe;
+  recipeImg = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -22,8 +22,9 @@ export class RecipeEditComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.route.params.subscribe((param) => {
-      this.recipe = this.recipeService.getRecipe(param['id']);
-      this.recipeForm.patchValue(this.recipe);
+      const recipe = this.recipeService.getRecipe(param['id']);
+      this.recipeImg = recipe.imagePath;
+      this.recipeForm.patchValue(recipe);
     });
   }
 
@@ -38,5 +39,10 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.recipeForm.value);
+  }
+
+  changeImage(event: Event): void {
+    const imgUrl = (event.target as HTMLInputElement).value;
+    this.recipeImg = imgUrl;
   }
 }
