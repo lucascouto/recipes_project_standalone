@@ -26,10 +26,16 @@
             name="amount"
             ngModel
             required
+            pattern="^[1-9]+[0-9]*$"
             #amount="ngModel"
           />
           <span *ngIf="amount.invalid && amount.touched" class="text-danger">
-            This field is required!
+            <span *ngIf="amount.errors['required']">
+              This field is required!
+            </span>
+            <span *ngIf="amount.errors['pattern']">
+              Please, enter a positive number!
+            </span>
           </span>
         </div>
       </div>
