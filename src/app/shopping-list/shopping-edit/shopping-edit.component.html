@@ -10,7 +10,12 @@
             class="form-control"
             name="name"
             ngModel
+            required
+            #name="ngModel"
           />
+          <span *ngIf="name.invalid && name.touched" class="text-danger">
+            This field is required!
+          </span>
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
@@ -20,7 +25,12 @@
             class="form-control"
             name="amount"
             ngModel
+            required
+            #amount="ngModel"
           />
+          <span *ngIf="amount.invalid && amount.touched" class="text-danger">
+            This field is required!
+          </span>
         </div>
       </div>
       <div class="row">

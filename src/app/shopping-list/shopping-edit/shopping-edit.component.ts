@@ -13,7 +13,12 @@ export class ShoppingEditComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onIngredientAdd(form: NgForm): void {
-    this.shoppingListService.addIngredient(form.value as Ingredient);
+  onIngredientAdd(ngForm: NgForm): void {
+    if (ngForm.invalid) {
+      ngForm.form.markAllAsTouched();
+      return;
+    }
+
+    this.shoppingListService.addIngredient(ngForm.value as Ingredient);
   }
 }
