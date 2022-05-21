@@ -44,7 +44,7 @@ export class RecipeEditComponent implements OnInit {
 
   private loadIngredient(): void {
     this.route.params.subscribe((param) => {
-      this.idRecipe = param['id'];
+      this.idRecipe = param['id'] ? param['id'] : -1;
       const recipe = this.recipeService.getRecipe(this.idRecipe);
       this.recipeImg = recipe?.imagePath;
       if (recipe?.ingredients) {
@@ -65,6 +65,8 @@ export class RecipeEditComponent implements OnInit {
     const recipe = this.recipeForm.value as Recipe;
     if (this.isNewRecipe) {
       this.recipeService.addRecipe(recipe);
+      this.recipeForm.reset();
+      this.recipeImg = '';
     } else {
       this.recipeService.editRecipe(recipe, this.idRecipe);
       this.router.navigate(['/recipes', this.idRecipe]);
