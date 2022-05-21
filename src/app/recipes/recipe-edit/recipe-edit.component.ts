@@ -53,12 +53,7 @@ export class RecipeEditComponent implements OnInit {
       name: [null, Validators.required],
       description: [null],
       imagePath: [null],
-      ingredients: this.fb.array([
-        this.fb.group({
-          name: [null],
-          amount: [null],
-        }),
-      ]),
+      ingredients: this.fb.array([]),
     });
   }
 
