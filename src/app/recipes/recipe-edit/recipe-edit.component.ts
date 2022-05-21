@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -6,7 +7,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -17,17 +19,20 @@ import { RecipeService } from '../recipe.service';
 export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
   recipeImg = '';
+  idRecipe = -1;
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.route.params.subscribe((param) => {
-      const recipe = this.recipeService.getRecipe(param['id']);
+      this.idRecipe = param['id'];
+      const recipe = this.recipeService.getRecipe(this.idRecipe);
       this.recipeImg = recipe?.imagePath;
       if (recipe?.ingredients) {
         for (const ingredient of recipe.ingredients) {
@@ -58,7 +63,13 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.recipeForm.value);
+    const recipe = this.recipeForm.value as Recipe;
+    if (this.isNewRecipe) {
+      this.recipeService.addRecipe(recipe);
+    } else {
+      this.recipeService.editRecipe(recipe, this.idRecipe);
+      this.router.navigate(['/recipes', this.idRecipe]);
+    }
   }
 
   changeImage(event: Event): void {
@@ -81,5 +92,9 @@ export class RecipeEditComponent implements OnInit {
         amount: [null],
       })
     );
+  }
+
+  private get isNewRecipe() {
+    return this.idRecipe === -1;
   }
 }

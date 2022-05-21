@@ -35,7 +35,15 @@ export class RecipeService {
   }
 
   getRecipes() {
-    return this.recipes.slice();
+    return this.recipes;
+  }
+
+  addRecipe(recipe: Recipe): void {
+    this.recipes.push(recipe);
+  }
+
+  editRecipe(recipe: Recipe, index: number): void {
+    this.recipes[index] = recipe;
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
