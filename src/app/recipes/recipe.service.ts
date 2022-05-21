@@ -3,7 +3,7 @@ import { Ingredient } from '../shared/ingredient';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipeService {
   private recipes: Recipe[] = [
     {
