@@ -69,4 +69,17 @@ export class RecipeEditComponent implements OnInit {
   getIngredientsControls(): AbstractControl[] {
     return (this.recipeForm.get('ingredients') as FormArray).controls;
   }
+
+  removeIngredientCtrl(index: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+  }
+
+  addIngredientCtrl(): void {
+    (this.recipeForm.get('ingredients') as FormArray).push(
+      this.fb.group({
+        name: [null],
+        amount: [null],
+      })
+    );
+  }
 }
