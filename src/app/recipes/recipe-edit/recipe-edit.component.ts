@@ -106,7 +106,7 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
-  showInputErrors(control: string): boolean {
+  showInputErrors(control: string | string[]): boolean {
     return (
       this.recipeForm.get(control).invalid &&
       this.recipeForm.get(control).touched
@@ -115,5 +115,9 @@ export class RecipeEditComponent implements OnInit {
 
   private get isNewRecipe() {
     return this.idRecipe === -1;
+  }
+
+  getFormControl(control: string | string[]): AbstractControl {
+    return this.recipeForm.get(control);
   }
 }
