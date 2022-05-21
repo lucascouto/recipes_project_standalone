@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -36,8 +35,8 @@ export class RecipeEditComponent implements OnInit {
   private createForm(): void {
     this.recipeForm = this.fb.group({
       name: [null, Validators.required],
-      description: [null],
-      imagePath: [null],
+      description: [null, Validators.required],
+      imagePath: [null, Validators.required],
       ingredients: this.fb.array([]),
     });
   }
@@ -51,8 +50,11 @@ export class RecipeEditComponent implements OnInit {
         for (const ingredient of recipe.ingredients) {
           (this.recipeForm.get('ingredients') as FormArray).push(
             this.fb.group({
-              name: [ingredient.name],
-              amount: [ingredient.amount],
+              name: [ingredient.name, Validators.required],
+              amount: [
+                ingredient.amount,
+                [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)],
+              ],
             })
           );
         }
@@ -62,6 +64,12 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.recipeForm.markAllAsTouched();
+
+    if (this.recipeForm.invalid) {
+      return;
+    }
+
     const recipe = this.recipeForm.value as Recipe;
     if (this.isNewRecipe) {
       this.recipeService.addRecipe(recipe);
@@ -89,9 +97,19 @@ export class RecipeEditComponent implements OnInit {
   addIngredientCtrl(): void {
     (this.recipeForm.get('ingredients') as FormArray).push(
       this.fb.group({
-        name: [null],
-        amount: [null],
+        name: [null, Validators.required],
+        amount: [
+          null,
+          [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)],
+        ],
       })
+    );
+  }
+
+  showInputErrors(control: string): boolean {
+    return (
+      this.recipeForm.get(control).invalid &&
+      this.recipeForm.get(control).touched
     );
   }
 

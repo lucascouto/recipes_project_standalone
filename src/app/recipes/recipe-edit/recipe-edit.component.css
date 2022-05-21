@@ -1,3 +1,7 @@
 .ingredient-controls {
     margin-top: 12px !important;
 }
+
+.ng-invalid.ng-touched:not(form) {
+    border: 1px solid red;
+}
