@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-xs-12" formArrayName="ingredients">
           <div
-            class="row"
+            class="row ingredient-controls"
             *ngFor="
               let ingredientCtrl of getIngredientsControls();
               let i = index
@@ -83,7 +83,7 @@
                 (click)="removeIngredientCtrl(i)"
                 *ngIf="getIngredientsControls().length > 1"
               >
-                X
+                x
               </button>
               <button
                 class="btn btn-success"
