@@ -46,6 +46,10 @@ export class RecipeService {
     this.recipes[index] = recipe;
   }
 
+  deleteRecipe(index: number): void {
+    this.recipes.splice(index, 1);
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
