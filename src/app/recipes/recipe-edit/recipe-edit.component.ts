@@ -30,6 +30,19 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.loadIngredient();
+  }
+
+  private createForm(): void {
+    this.recipeForm = this.fb.group({
+      name: [null, Validators.required],
+      description: [null],
+      imagePath: [null],
+      ingredients: this.fb.array([]),
+    });
+  }
+
+  private loadIngredient(): void {
     this.route.params.subscribe((param) => {
       this.idRecipe = param['id'];
       const recipe = this.recipeService.getRecipe(this.idRecipe);
@@ -45,15 +58,6 @@ export class RecipeEditComponent implements OnInit {
         }
       }
       this.recipeForm.patchValue(recipe);
-    });
-  }
-
-  private createForm(): void {
-    this.recipeForm = this.fb.group({
-      name: [null, Validators.required],
-      description: [null],
-      imagePath: [null],
-      ingredients: this.fb.array([]),
     });
   }
 
