@@ -17,7 +17,6 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
-  recipeImg = '';
   idRecipe = -1;
 
   constructor(
@@ -45,7 +44,7 @@ export class RecipeEditComponent implements OnInit {
     this.route.params.subscribe((param) => {
       this.idRecipe = param['id'] ? param['id'] : -1;
       const recipe = this.recipeService.getRecipe(this.idRecipe);
-      this.recipeImg = recipe?.imagePath;
+
       if (recipe?.ingredients) {
         for (const ingredient of recipe.ingredients) {
           (this.recipeForm.get('ingredients') as FormArray).push(
@@ -74,16 +73,10 @@ export class RecipeEditComponent implements OnInit {
     if (this.isNewRecipe) {
       this.recipeService.addRecipe(recipe);
       this.recipeForm.reset();
-      this.recipeImg = '';
     } else {
       this.recipeService.editRecipe(recipe, this.idRecipe);
       this.router.navigate(['/recipes', this.idRecipe]);
     }
-  }
-
-  changeImage(event: Event): void {
-    const imgUrl = (event.target as HTMLInputElement).value;
-    this.recipeImg = imgUrl;
   }
 
   getIngredientsControls(): AbstractControl[] {
