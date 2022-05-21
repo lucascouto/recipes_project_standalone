@@ -113,7 +113,7 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
-  private get isNewRecipe() {
+  get isNewRecipe() {
     return this.idRecipe === -1;
   }
 
