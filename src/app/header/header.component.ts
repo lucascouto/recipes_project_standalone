@@ -26,6 +26,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.firebaseService.saveRecipes();
   }
 
+  logout(): void {
+    this.authService.logout();
+  }
+
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
