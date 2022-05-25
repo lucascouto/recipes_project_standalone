@@ -20,6 +20,18 @@
         <li>
           <a style="cursor: pointer">Logout</a>
         </li>
+        <li appDropdown class="dropdown">
+          <a class="dropdown-toggle" role="button">
+            Manage Data <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a style="cursor: pointer" (click)="saveToFirebase()">
+                Save Recipes to Firebase
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
