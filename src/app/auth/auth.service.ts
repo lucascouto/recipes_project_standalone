@@ -21,7 +21,7 @@ export class AuthService {
 
   signup(email: string, password: string) {
     return this.http.post<AuthResponse>(
-      `${this.BASE_URL}/signUp?key=${this.API_KEY}`,
+      `${this.BASE_URL}signUp?key=${this.API_KEY}`,
       {
         email,
         password,
