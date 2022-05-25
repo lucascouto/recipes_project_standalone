@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent {
   isLoginMode = true;
-  emailExists = false;
+  error = '';
   isLoading = false;
 
   constructor(private authService: AuthService) {}
@@ -34,16 +34,14 @@ export class AuthComponent {
       this.authService.signup(email, password).subscribe({
         next: (response) => {
           console.log(response);
-          form.reset();
           this.isLoading = false;
         },
-        error: (error: HttpErrorResponse) => {
-          if (error.error.error.message === 'EMAIL_EXISTS') {
-            this.emailExists = true;
-          }
+        error: (errorMessage) => {
+          this.error = errorMessage;
           this.isLoading = false;
         },
       });
     }
+    form.reset();
   }
 }
