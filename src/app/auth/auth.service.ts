@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
+import { User } from './user';
 
 export interface AuthResponse {
   kind: string;
@@ -28,7 +29,7 @@ export class AuthService {
         password,
         returnSecureToken: true,
       })
-      .pipe(catchError((errorRes) => this.handleError(errorRes)));
+      .pipe(catchError(this.handleError));
   }
 
   login(email: string, password: string) {
@@ -41,7 +42,7 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
-      .pipe(catchError((errorRes) => this.handleError(errorRes)));
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
