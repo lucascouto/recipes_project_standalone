@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { merge } from 'rxjs';
+
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
