@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Subject, throwError } from 'rxjs';
+import { catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user';
 
 export interface AuthResponse {
@@ -20,6 +20,8 @@ export class AuthService {
   private BASE_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   private API_KEY = 'AIzaSyCFuOlGgMVDWXL4jNuaqhNywNogWTgk42E';
 
+  user = new Subject<User>();
+
   constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {
@@ -29,7 +31,17 @@ export class AuthService {
         password,
         returnSecureToken: true,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        tap((response) =>
+          this.handleAuthentication(
+            response.email,
+            response.localId,
+            response.idToken,
+            +response.expiresIn
+          )
+        )
+      );
   }
 
   login(email: string, password: string) {
@@ -42,7 +54,28 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        tap((response) =>
+          this.handleAuthentication(
+            response.email,
+            response.localId,
+            response.idToken,
+            +response.expiresIn
+          )
+        )
+      );
+  }
+
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
