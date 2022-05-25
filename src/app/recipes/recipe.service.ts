@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
@@ -5,49 +6,33 @@ import { Recipe } from './recipe';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
-  private recipes: Recipe[] = [
-    {
-      name: 'A test recipe',
-      description: 'this is a simply test',
-      imagePath:
-        'https://cdn.pixabay.com/photo/2016/06/15/19/09/food-1459693_960_720.jpg',
-      ingredients: [
-        { name: 'Meat', amount: 1 },
-        { name: 'French Fries', amount: 20 },
-      ],
-    },
-    {
-      name: 'Another recipe',
-      description: 'another teste recipe',
-      imagePath:
-        'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
-      ingredients: [
-        { name: 'Buns', amount: 2 },
-        { name: 'Meat', amount: 1 },
-      ],
-    },
-  ];
+  private recipes: Recipe[] = [];
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  private BASE_URL = 'http://localhost:3000/recipes';
 
-  getRecipe(index: number): Recipe {
-    return this.recipes[index];
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private http: HttpClient
+  ) {}
+
+  getRecipe(id: number) {
+    return this.http.get<Recipe>(`${this.BASE_URL}/${id}`);
   }
 
   getRecipes() {
-    return this.recipes;
+    return this.http.get<Recipe[]>(`${this.BASE_URL}`);
   }
 
   addRecipe(recipe: Recipe): void {
-    this.recipes.push(recipe);
+    this.http.post<Recipe>(`${this.BASE_URL}`, recipe).subscribe();
   }
 
-  editRecipe(recipe: Recipe, index: number): void {
-    this.recipes[index] = recipe;
+  editRecipe(recipe: Recipe, id: number): void {
+    this.http.put<Recipe>(`${this.BASE_URL}/${id}`, recipe).subscribe();
   }
 
-  deleteRecipe(index: number): void {
-    this.recipes.splice(index, 1);
+  deleteRecipe(id: number): void {
+    this.http.delete(`${this.BASE_URL}/${id}`).subscribe();
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {

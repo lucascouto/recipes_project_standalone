@@ -17,7 +17,7 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
-  idRecipe = -1;
+  idRecipe = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,23 +42,26 @@ export class RecipeEditComponent implements OnInit {
 
   private loadIngredient(): void {
     this.route.params.subscribe((param) => {
-      this.idRecipe = param['id'] ? param['id'] : -1;
-      const recipe = this.recipeService.getRecipe(this.idRecipe);
+      this.idRecipe = param['id'];
 
-      if (recipe?.ingredients) {
-        for (const ingredient of recipe.ingredients) {
-          (this.recipeForm.get('ingredients') as FormArray).push(
-            this.fb.group({
-              name: [ingredient.name, Validators.required],
-              amount: [
-                ingredient.amount,
-                [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)],
-              ],
-            })
-          );
-        }
+      if (this.idRecipe) {
+        this.recipeService.getRecipe(this.idRecipe).subscribe((recipe) => {
+          if (recipe?.ingredients) {
+            for (const ingredient of recipe.ingredients) {
+              (this.recipeForm.get('ingredients') as FormArray).push(
+                this.fb.group({
+                  name: [ingredient.name, Validators.required],
+                  amount: [
+                    ingredient.amount,
+                    [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)],
+                  ],
+                })
+              );
+            }
+          }
+          this.recipeForm.patchValue(recipe);
+        });
       }
-      this.recipeForm.patchValue(recipe);
     });
   }
 
@@ -107,7 +110,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   get isNewRecipe() {
-    return this.idRecipe === -1;
+    return !this.idRecipe;
   }
 
   getFormControl(control: string | string[]): AbstractControl {
