@@ -28,7 +28,7 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.loadIngredient();
+    this.loadRecipe();
   }
 
   private createForm(): void {
@@ -40,7 +40,7 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
-  private loadIngredient(): void {
+  private loadRecipe(): void {
     this.route.params.subscribe((param) => {
       this.idRecipe = param['id'];
 
