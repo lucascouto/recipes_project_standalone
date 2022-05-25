@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 export class AuthComponent {
   isLoginMode = true;
   emailExists = false;
+  isLoading = false;
 
   constructor(private authService: AuthService) {}
 
@@ -25,6 +26,8 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
 
+    this.isLoading = true;
+
     if (this.isLoginMode) {
       //...
     } else {
@@ -32,11 +35,13 @@ export class AuthComponent {
         next: (response) => {
           console.log(response);
           form.reset();
+          this.isLoading = false;
         },
         error: (error: HttpErrorResponse) => {
           if (error.error.error.message === 'EMAIL_EXISTS') {
             this.emailExists = true;
           }
+          this.isLoading = false;
         },
       });
     }
