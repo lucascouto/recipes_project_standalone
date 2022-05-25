@@ -5,7 +5,7 @@
     </div>
 
     <div class="navbar-default">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" *ngIf="isAuthenticated">
         <li routerLinkActive="active">
           <a [routerLink]="['/recipes']">Recipes</a>
         </li>
@@ -14,6 +14,11 @@
         </li>
         <li routerLinkActive="active">
           <a [routerLink]="['/auth']">Authenticate</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="isAuthenticated">
+        <li>
+          <a style="cursor: pointer">Logout</a>
         </li>
       </ul>
     </div>
