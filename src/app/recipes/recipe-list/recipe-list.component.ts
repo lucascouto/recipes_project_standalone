@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { merge } from 'rxjs';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
@@ -13,8 +14,9 @@ export class RecipeListComponent implements OnInit {
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    this.recipeService
-      .getRecipes()
-      .subscribe((recipes) => (this.recipes = recipes));
+    merge(
+      this.recipeService.getRecipes(),
+      this.recipeService.updatedRecipes
+    ).subscribe((recipes) => (this.recipes = recipes));
   }
 }

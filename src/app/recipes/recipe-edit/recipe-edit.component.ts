@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
@@ -75,6 +76,11 @@ export class RecipeEditComponent implements OnInit {
     const recipe = this.recipeForm.value as Recipe;
     if (this.isNewRecipe) {
       this.recipeService.addRecipe(recipe);
+      this.recipeService
+        .getRecipes()
+        .subscribe((recipes) =>
+          this.recipeService.updatedRecipes.next(recipes)
+        );
       this.recipeForm.reset();
     } else {
       this.recipeService.editRecipe(recipe, this.idRecipe);
