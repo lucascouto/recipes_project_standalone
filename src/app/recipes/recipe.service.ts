@@ -6,8 +6,6 @@ import { Recipe } from './recipe';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
-  private recipes: Recipe[] = [];
-
   private BASE_URL = 'http://localhost:3000/recipes';
 
   constructor(
