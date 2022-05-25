@@ -1,18 +1,6 @@
 {
   "recipes": [
     {
-      "name": "teste 2",
-      "description": "teste",
-      "imagePath": "https://img.elo7.com.br/product/zoom/1F6ACCE/caderno-de-receitas-receitas.jpg",
-      "ingredients": [
-        {
-          "name": "testessss",
-          "amount": 2
-        }
-      ],
-      "id": 3
-    },
-    {
       "name": "Apples",
       "description": "teste",
       "imagePath": "https://cdn.loveandlemons.com/wp-content/uploads/2020/03/bean-recipes-1.jpg",
