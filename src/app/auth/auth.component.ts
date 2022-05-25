@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from './auth.service';
@@ -8,6 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent {
   isLoginMode = true;
+  emailExists = false;
 
   constructor(private authService: AuthService) {}
 
@@ -27,11 +29,16 @@ export class AuthComponent {
       //...
     } else {
       this.authService.signup(email, password).subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
+        next: (response) => {
+          console.log(response);
+          form.reset();
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.error.error.message === 'EMAIL_EXISTS') {
+            this.emailExists = true;
+          }
+        },
       });
     }
-
-    form.reset();
   }
 }
