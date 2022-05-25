@@ -74,18 +74,18 @@ export class RecipeEditComponent implements OnInit {
     }
 
     const recipe = this.recipeForm.value as Recipe;
+
     if (this.isNewRecipe) {
       this.recipeService.addRecipe(recipe);
-      this.recipeService
-        .getRecipes()
-        .subscribe((recipes) =>
-          this.recipeService.updatedRecipes.next(recipes)
-        );
       this.recipeForm.reset();
     } else {
       this.recipeService.editRecipe(recipe, this.idRecipe);
       this.router.navigate(['/recipes', this.idRecipe]);
     }
+
+    this.recipeService
+      .getRecipes()
+      .subscribe((recipes) => this.recipeService.updatedRecipes.next(recipes));
   }
 
   getIngredientsControls(): AbstractControl[] {
