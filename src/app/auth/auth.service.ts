@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
-interface AuthResponse {
+export interface AuthResponse {
   kind: string;
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
+  registered?: boolean;
 }
 
 @Injectable({
@@ -41,5 +42,16 @@ export class AuthService {
           return throwError(() => errorMsg);
         })
       );
+  }
+
+  login(email: string, password: string) {
+    return this.http.post<AuthResponse>(
+      `${this.BASE_URL}signInWithPassword?key=${this.API_KEY}`,
+      {
+        email,
+        password,
+        returnSecureToken: true,
+      }
+    );
   }
 }
