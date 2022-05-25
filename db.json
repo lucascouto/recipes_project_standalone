@@ -4,7 +4,16 @@
       "name": "Apples",
       "description": "teste",
       "imagePath": "https://cdn.loveandlemons.com/wp-content/uploads/2020/03/bean-recipes-1.jpg",
-      "ingredients": [],
+      "ingredients": [
+        {
+          "name": "feijão",
+          "amount": 2
+        },
+        {
+          "name": "caldo",
+          "amount": 1
+        }
+      ],
       "id": 4
     },
     {
