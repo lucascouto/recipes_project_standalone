@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User } from './user';
 
 export interface AuthResponse {
@@ -19,7 +20,7 @@ export interface AuthResponse {
 })
 export class AuthService {
   private BASE_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:';
-  private API_KEY = 'AIzaSyCFuOlGgMVDWXL4jNuaqhNywNogWTgk42E';
+  private API_KEY = environment.firebaseAPIKey;
 
   user = new BehaviorSubject<User>(null);
 
