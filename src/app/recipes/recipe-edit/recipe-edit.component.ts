@@ -11,10 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css'],

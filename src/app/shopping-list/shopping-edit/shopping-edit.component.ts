@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient';
 import { ShoppingListService } from '../shopping-list.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css'],

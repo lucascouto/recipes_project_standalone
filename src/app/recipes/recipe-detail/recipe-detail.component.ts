@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   standalone: true,
+  imports: [CommonModule, SharedModule],
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css'],
