@@ -15,9 +15,7 @@ const appRoutes: Routes = [
   {
     path: 'shopping-list',
     loadChildren: () =>
-      import('./shopping-list/shopping-list.module').then(
-        (m) => m.ShoppingListModule
-      ),
+      import('./shopping-list/shopping-list.routes').then((m) => m.routes),
   },
 ];
 
