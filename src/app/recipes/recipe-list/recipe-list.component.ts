@@ -3,9 +3,12 @@ import { merge } from 'rxjs';
 
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { CommonModule } from '@angular/common';
+import { RecipeItemComponent } from './recipe-item/recipe-item.component';
 
 @Component({
   standalone: true,
+  imports: [CommonModule, RecipeItemComponent],
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css'],

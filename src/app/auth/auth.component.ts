@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponse, AuthService } from './auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
+  imports: [CommonModule, FormsModule],
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
