@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthResponse, AuthService } from './auth.service';
 
 @Component({
+  standalone: true,
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })

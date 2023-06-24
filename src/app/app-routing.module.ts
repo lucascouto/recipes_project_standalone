@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: () => import('./auth/auth.routes').then((m) => m.routes),
   },
   {
     path: 'shopping-list',
