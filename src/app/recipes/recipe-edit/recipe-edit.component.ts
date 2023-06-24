@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,12 +17,12 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-edit.component.css'],
 })
 export class RecipeEditComponent implements OnInit {
-  recipeForm: FormGroup;
+  recipeForm: UntypedFormGroup;
   idRecipe = 0;
 
   constructor(
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private recipeService: RecipeService,
     private router: Router
   ) {}
@@ -49,7 +49,7 @@ export class RecipeEditComponent implements OnInit {
         this.recipeService.getRecipe(this.idRecipe).subscribe((recipe) => {
           if (recipe?.ingredients) {
             for (const ingredient of recipe.ingredients) {
-              (this.recipeForm.get('ingredients') as FormArray).push(
+              (this.recipeForm.get('ingredients') as UntypedFormArray).push(
                 this.fb.group({
                   name: [ingredient.name, Validators.required],
                   amount: [
@@ -89,15 +89,15 @@ export class RecipeEditComponent implements OnInit {
   }
 
   getIngredientsControls(): AbstractControl[] {
-    return (this.recipeForm.get('ingredients') as FormArray).controls;
+    return (this.recipeForm.get('ingredients') as UntypedFormArray).controls;
   }
 
   removeIngredientCtrl(index: number): void {
-    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+    (this.recipeForm.get('ingredients') as UntypedFormArray).removeAt(index);
   }
 
   addIngredientCtrl(): void {
-    (this.recipeForm.get('ingredients') as FormArray).push(
+    (this.recipeForm.get('ingredients') as UntypedFormArray).push(
       this.fb.group({
         name: [null, Validators.required],
         amount: [
