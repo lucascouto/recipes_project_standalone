@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponse, AuthService } from './auth.service';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SharedModule],
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
