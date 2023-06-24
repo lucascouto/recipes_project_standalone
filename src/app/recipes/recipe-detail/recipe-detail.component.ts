@@ -4,6 +4,7 @@ import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
 @Component({
+  standalone: true,
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css'],
