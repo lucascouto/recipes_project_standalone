@@ -3,10 +3,12 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { FirebaseService } from '../shared/firebase.service';
 import { DropdownDirective } from '../shared/dropdown.directive';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [DropdownDirective],
+  imports: [DropdownDirective, CommonModule, RouterLink, RouterLinkActive],
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
